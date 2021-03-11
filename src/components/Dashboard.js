@@ -65,6 +65,7 @@ const Dashboard = () => {
   };
 
   const handleClick = () => {
+    setLoading(true);
     axios
       .post(
         "https://investment-app7.herokuapp.com/api/user_risk_profile",
@@ -79,6 +80,7 @@ const Dashboard = () => {
       )
       .then(function (response) {
         console.log(response.data.profile);
+        setLoading(false);
         history.push({
           pathname: "/profile",
           state: {
@@ -87,6 +89,7 @@ const Dashboard = () => {
         });
       })
       .catch(function (error) {
+        setLoading(false);
         console.log(error);
       });
   };
