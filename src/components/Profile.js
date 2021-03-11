@@ -5,6 +5,7 @@ import Empty from "../images/empty.png";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles({
   button: {
@@ -33,11 +34,11 @@ function Profile() {
         </div>
         <div>
         <div className="text">
-          <Span>Capital Preservative</Span>
-          <H2>Moderate Risk Taker</H2>
+          <Span>Aggressive Growth</Span>
+          <H2>Very High Risk Taker</H2>
           <P>
             {name}, based on the current investment solutions you are holding,
-            we deduce that you are a low risk taker. Kindly click on the button
+            we deduce that you are a very high risk taker. Kindly click on the button
             to try our risk assesment tool, you can skip the process.
           </P>
         </div>
@@ -55,10 +56,12 @@ function Profile() {
 
       <Right>
         <div className="other">
-            <div style={{ marginBottom: 30, display: "flex", flexDirection: "row", alignSelf: "flex-end"}} >
+            {/* <div  > */}
+            <Link to="/" style={{ marginBottom: 30, display: "flex", flexDirection: "row", alignSelf: "flex-end", textDecoration: "none", color: "#1B365D"}}>
             <Skip>Skip</Skip>
-            <ArrowRightAltIcon style={{ padding: 0, margin: 0 }} />
-            </div>
+            {/* <ArrowRightAltIcon style={{ padding: 0, margin: 0 }} /> */}
+            </Link>
+            {/* </div> */}
           <img src={Empty} alt="logo" />
           <div style={{ marginTop: 50 }}>
           <H2 style={{ color: "#172B4D" }}>

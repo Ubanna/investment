@@ -9,6 +9,8 @@ import {
 } from "@material-ui/core";
 import styled from "styled-components";
 import EntryImg from "../images/image.png";
+import { useHistory } from 'react-router-dom';
+
 
 const Login = () => {
   const paperStyle = {
@@ -22,6 +24,12 @@ const Login = () => {
     marginTop: 75,
   };
   const btnstyle = { margin: "8px 0", backgroundColor: "#1B365D" };
+
+  const history = useHistory();
+
+  const handleClick = () => {
+    history.push("/dashboard");
+}
   
   return (
     <Wrapper>
@@ -58,14 +66,16 @@ const Login = () => {
               label="First name"
               placeholder="Enter first name"
               fullWidth
-              required
+              value="William"
+              // required
             />
             <TextField
               label="User ID"
               placeholder="Enter user id"
             //   type="password"
               fullWidth
-              required
+              value="101"
+              // required
             />
             <div>
             <Button
@@ -74,6 +84,7 @@ const Login = () => {
               variant="contained"
               style={btnstyle}
               fullWidth
+              onClick={handleClick}
             >
               Proceed
             </Button>
@@ -85,7 +96,7 @@ const Login = () => {
           </Paper>
         </Grid>
       </Right>
-      <hr class="vline" />
+      <hr className="vline" />
     </Wrapper>
   );
 };

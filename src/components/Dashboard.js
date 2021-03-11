@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -13,6 +13,8 @@ import retirement from "../images/retirement.png"
 import treasury from "../images/treasury.png"
 import orange from "../images/orangeicon.png"
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
+import { useHistory } from 'react-router-dom';
+import axios from 'axios';
 
 const useStyles = makeStyles({
     root: {
@@ -34,9 +36,43 @@ const useStyles = makeStyles({
     }
   });
 
-function Dashboard() {
+const Dashboard = () => {
   var name = "William";
   const classes = useStyles();
+  const history = useHistory();
+
+  const options = {
+    headers: {
+        'Content-Type': 'application/json',
+    }
+  };
+
+  const handleClick = () => {
+    history.push("/profile");
+    // axios.post('https://investment-app7.herokuapp.com/api/user_risk_profile', {
+    //   assets: data,
+    // }, options)
+    // .then(function (response) {
+    //   history.push("/profile");
+    // })
+    // .catch(function (error) {
+    //   console.log(error);
+    // });
+}
+
+const [data, setData] = useState([]);
+
+useEffect(() => {
+  const fetchData = async () => {
+    const result = await axios(
+      `https://investment-app7.herokuapp.com/api/temp_user`,
+    );
+    // console.log("inside", result.data)
+    setData(result.data.user);
+  };
+
+  fetchData();
+}, [data]);
 
   return (
     <Container>
@@ -47,23 +83,25 @@ function Dashboard() {
           Here are your investment solutions from the subsidairies you added
         </Span>
       </TextWrapper>
-
       <CardWrapper>
-      <Card className={classes.root}>
+      {
+        data.map((item, index) => {
+          return (
+      <Card key={index} className={classes.root}>
         <CardActionArea>
           <CardMedia
             component="img"
             className={classes.image}
             alt="Contemplative Reptile"
             // height="140"
-            image={treasury}
+            image={item.asset === "Ethical Fund" ? retirement : item.asset === "Discovery Fund" ? discovery: item.asset === "Euro-bond Fund" ? equity : treasury }
             title="Contemplative Reptile"
           />
           <CardContent>
             <div style={{ display: "flex", flexDirection: "row", justifyContent: 'flex-start'}} >
             <img src={orange} alt="logo" />
               <div style={{ marginLeft: 20 }}>
-                <AssetName>Equities</AssetName>
+                <AssetName>{item.asset} </AssetName>
                 <TagContainer>
                 <Tag style={{ color: "#36B37E", alignItems: "center", alignContent: "center", justifyContent: "center" }}><ArrowDropUpIcon style={{ padding: 0, margin: 0 }} fontSize="8px" /> 27%</Tag>
                 <Tag style={{ color: "#3077FF", background: "#EAF1FF", marginLeft: 7}} >low risk</Tag> 
@@ -80,7 +118,7 @@ function Dashboard() {
               </div>
 
               <div style={{ display: "flex", flexDirection: 'column', justifyContent: "center" }}>
-                <Amount>&#8358;50,000</Amount>
+                <Amount>&#8358;{item.amount}</Amount>
                 <ManagementFeeText>Minimum Investment</ManagementFeeText>
               </div>
 
@@ -88,71 +126,14 @@ function Dashboard() {
           </CardContent>
         </CardActionArea>
       </Card>
-
-      <Card className={classes.root}>
-        <CardActionArea>
-          <CardMedia
-            component="img"
-            alt="Contemplative Reptile"
-            height="140"
-            image={discovery}
-            title="Contemplative Reptile"
-          />
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="h2">
-              Lizard
-            </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
-              Lizards are a widespread group of squamate reptiles, with over
-              6,000 species, ranging across all continents except Antarctica
-            </Typography>
-          </CardContent>
-        </CardActionArea>
-      </Card>
-      <Card className={classes.root}>
-        <CardActionArea>
-          <CardMedia
-            component="img"
-            alt="Contemplative Reptile"
-            height="140"
-            image={retirement}
-            title="Contemplative Reptile"
-          />
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="h2">
-              Lizard
-            </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
-              Lizards are a widespread group of squamate reptiles, with over
-              6,000 species, ranging across all continents except Antarctica
-            </Typography>
-          </CardContent>
-        </CardActionArea>
-      </Card>
-      <Card className={classes.root}>
-        <CardActionArea>
-          <CardMedia
-            component="img"
-            alt="Contemplative Reptile"
-            height="140"
-            image={equity}
-            title="Contemplative Reptile"
-          />
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="h2">
-              Lizard
-            </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
-              Lizards are a widespread group of squamate reptiles, with over
-              6,000 species, ranging across all continents except Antarctica
-            </Typography>
-          </CardContent>
-        </CardActionArea>
-      </Card>
-      </CardWrapper>
+          )
+        })
+      }
+       </CardWrapper>
       
       <ButtonWrapper>
       <Button 
+      onClick={handleClick}
       variant="contained" 
       color="primary" 
       className={classes.button}>
