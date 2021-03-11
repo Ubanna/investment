@@ -19,9 +19,31 @@ const useStyles = makeStyles({
   },
 });
 
-function Profile() {
+function Profile(props) {
   const classes = useStyles();
   var name = "William";
+  console.log("from profile screen", props.location.state.profile)
+
+  let prof = ""
+  let second = ""
+
+  if (props.location.state.profile === "low") {
+    prof = "Capital Preservation"
+    second = "Low"
+  } else if (props.location.state.profile === "low-2") {
+    prof = "Income"
+    second = "Low"
+  } else if (props.location.state.profile === "moderate") {
+    prof = "Income & Growth"
+    second = "Moderate"
+  } else if (props.location.state.profile === "high") {
+    prof = "Growth"
+    second = "High"
+  } else {
+    prof = "Aggressive Growth"
+    second = "Very High"
+  }
+
   return (
     <Wrapper>
       <Left>
@@ -34,11 +56,11 @@ function Profile() {
         </div>
         <div>
         <div className="text">
-          <Span>Aggressive Growth</Span>
-          <H2>Very High Risk Taker</H2>
+          <Span>{prof}</Span>
+          <H2>{second} Risk Taker</H2>
           <P>
             {name}, based on the current investment solutions you are holding,
-            we deduce that you are a very high risk taker. Kindly click on the button
+            we deduce that you are a {second} risk taker. Kindly click on the button
             to try our risk assesment tool, you can skip the process.
           </P>
         </div>
