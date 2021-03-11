@@ -226,7 +226,7 @@ const Dashboard = () => {
                             >
                               <Amount>&#8358;{item.amount}</Amount>
                               <ManagementFeeText>
-                                Minimum Investment
+                                Amount Invested
                               </ManagementFeeText>
                             </div>
                           </div>
