@@ -224,7 +224,7 @@ const Dashboard = () => {
                                 justifyContent: "center",
                               }}
                             >
-                              <Amount>&#8358;{item.amount}</Amount>
+                              <Amount>&#8358;{item.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</Amount>
                               <ManagementFeeText>
                                 Amount Invested
                               </ManagementFeeText>
