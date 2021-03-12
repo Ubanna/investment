@@ -100,9 +100,10 @@ const Dashboard = () => {
       const result = await axios(
         `https://investment-app7.herokuapp.com/api/temp_user`
       );
+      var random = Math.floor(Math.random() * 6) + 1;
       setData(result.data.user);
       var arr = shuffle(result.data.user);
-      var newlist = arr.filter((item, idx) => idx < 6);
+      var newlist = arr.filter((item, idx) => idx < random);
       setList(newlist);
       setLoading(false);
     };
@@ -118,7 +119,8 @@ const Dashboard = () => {
 
   function handleShuffle() {
     const changes = shuffle([...data]);
-    var newlist = changes.filter((item, idx) => idx < 6);
+    var random = Math.floor(Math.random() * 6) + 1;
+    var newlist = changes.filter((item, idx) => idx < random);
     setList(newlist);
   }
 
